@@ -1,0 +1,23 @@
+
+name: CI
+on:
+  pull_request:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:      
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.2        
+        with:  
+          node-version: 12
+      - name: Build
+        run: npm run build
+        
+      - name: Install Surge
+        run: npm i surge -g
+        
+      - name: Upload on Surge
+        run: surge ./build faheem01.surge.sh/ --token ${{ secrets.SURGE_TOKEN }}
+        
+        
